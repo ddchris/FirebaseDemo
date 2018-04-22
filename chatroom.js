@@ -40,7 +40,8 @@ let app = new Vue({
                 let content = element.val().content;
                 let timeStamp = element.val().timeStamp;
                 let nickname = element.val().nickname;
-                if (nickname === this.yourself) {
+                if (!nickname) { return 0 }
+                else if (nickname === this.yourself) {
                     this.dialogue += `<li class="${this.myStyle}">
                                         <span>
                                             ${nickname}| ${content}   
