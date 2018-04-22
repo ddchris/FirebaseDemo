@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>chatroom</title>
+
+    <style lang="">
+        #nickname {
+            width: 100px;
+        }
+
+        #dialogueFrame {
+            border: 1px solid black;
+            font-size: 14px;
+            padding: 20px 30px;
+            border-radius: 5%;
+            margin-top: 20px;
+            height: 250px;
+            width: 400px;
+            overflow-y: scroll;
+        }
+        #dialogueFrame li{
+            display: block;
+            line-height: 50px;
+            width: 100%;
+            clear: both;
+        }
+        #text {
+            width: 250px;
+        }
+        .myStyle{
+            color: green;
+            list-style:none;
+        }
+        .myStyle img{
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+        .myStyle span{
+            float: right;
+        }
+        .otherStyle{
+            color:red;
+            list-style:none;
+        }
+        .otherStyle span{
+            float: left;
+        }
+        .otherStyle img{
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h2>Firebase chatroom demo</h2>
+        <input type="text" id="nickname" v-model="yourself"> 請輸入聊天暱稱
+        <div id="dialogueFrame">
+            <ul id="dialogue">
+                開始對話吧~
+            </ul>
+        </div>
+        <input type="text" id="text" v-model="text">
+        <button id="send" v-on:click="sendMsg()" >送出</button>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/4.6.1/firebase.js"></script>
+    <script src="/chatroom.js"></script>
+    <script>
+
+
+
+    </script>
+</body>
+
+</html>

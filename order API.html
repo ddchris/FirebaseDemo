@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+</head>
+
+<body>
+<script src="https://www.gstatic.com/firebasejs/4.6.1/firebase.js"></script>
+<script>
+var config = {
+    apiKey: "AIzaSyAQJUY8llWghA-LhZQf0m6DF__aRqyDBWQ",
+    authDomain: "order-startat-endat-equalto.firebaseapp.com",
+    databaseURL: "https://order-startat-endat-equalto.firebaseio.com",
+    projectId: "order-startat-endat-equalto",
+    storageBucket: "",
+    messagingSenderId: "598631815790"
+};
+firebase.initializeApp(config);
+// 排序
+// 由輕到重
+var people = {
+    "大寶": {
+        "length": 12.5,
+        "weight": 5000,
+        "e-mail":'大寶@gmail.com'
+    },
+    "二寶": {
+        "length": 9,
+        "weight": 4500,
+        "e-mail":'二寶@gmail.com'
+    },
+    "小寶": {
+        "length": false,
+        "weight": 3500,
+        "e-mail":'小寶@gmail.com'
+    },
+    "小小寶": {
+        "length": 9,
+        "weight": 3000,
+        "e-mail":'小小寶@gmail.com'
+    }
+    ,
+    "迷你寶": {
+        "length": 9,
+        "weight": 2500,
+        "e-mail":'迷你寶@gmail.com'
+    }
+};
+firebase.database().ref('people').set(people);
+var peopleRef = firebase.database().ref('people');
+// 路徑>>排序('屬性')>>過濾>>讀取> forEach 依序撈出資料
+
+// 撈取重量 >= 3500 的資料,並依重量排序
+peopleRef.orderByChild('weight').startAt(3500).once('value', function (rawData) {
+    console.log('重量 >= 3500 的資料,並依重量排序: ');
+    rawData.forEach(function (item) {
+        console.log(item.val());
+    })
+})
+// 撈取重量 <=4500 的資料
+peopleRef.orderByChild('weight').endAt(4000).once('value', function (rawData) {
+    console.log('重量 <=4500 的資料,並依重量排序: ');
+    rawData.forEach(function (item) {
+        console.log(item.val());
+    })
+    for (let i = 0; i < 6; i++) {
+        console.log(i);
+    }
+    console.log('before!');
+    
+}).then((res)=> console.log(res.val()))
+console.log('after!');
+
+// 撈取重量 3500-4500 的資料
+peopleRef.orderByChild('weight').startAt(3500).endAt(4500).once('value', function (rawData) {
+    console.log('重量 3500-4500 的資料,並依重量排序: ');
+    rawData.forEach(function (item) {
+        console.log(item.val());
+    })
+})
+
+// 使用 limitToFirst(), limitToLast() 限制顯示資料筆數
+// 撈取重量 3500 以上的資料,只顯示前面一筆
+peopleRef.orderByChild('weight').startAt(3500).limitToFirst(1).once('value', function (rawData) {
+    console.log('重量 4000 以下的資料,只顯示最前面一筆: ');
+    rawData.forEach(function (item) {
+        console.log(item.val());
+    })
+})
+
+// 撈取重量 3500 以上的資料,只顯示後面一筆
+peopleRef.orderByChild('weight').startAt(3500).limitToLast(1).once('value', function (rawData) {
+    console.log('重量 4000 以下的資料,只顯示最後面一筆: ');
+    rawData.forEach(function (item) {
+        console.log(item.val());
+    })
+})
+
+// 查找特定一筆資(e-mail = 小寶@gmail.com)
+peopleRef.orderByChild('e-mail').equalTo('小寶@gmail.com').once('value', function (rawData) {
+    rawData.forEach(function (item) {
+        // 使用 .key屬性撈取父層 key 值
+        console.log('item.key: ', item.key);
+        console.log(item.val());
+    })
+})
+</script>
+</body>
+
+</html>

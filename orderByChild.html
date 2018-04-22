@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <script src="https://www.gstatic.com/firebasejs/4.6.1/firebase.js"></script>
+    <script>
+        var config = {
+            apiKey: "AIzaSyDDbxcmfSdv2CLlFb0d-NzQISaXoJzaVZY",
+            authDomain: "orderbychild.firebaseapp.com",
+            databaseURL: "https://orderbychild.firebaseio.com",
+            projectId: "orderbychild",
+            storageBucket: "orderbychild.appspot.com",
+            messagingSenderId: "687731688962"
+        };
+        firebase.initializeApp(config);
+        // 排序
+        // 由輕到重
+        var people = {
+            "大寶": {
+                "height": 160,
+                "age": 28,
+                "weight": 70,
+                "name":'大寶'
+            },
+            "小寶": {
+                "height": 170,
+                "age": 15,
+                "weight": 50,
+                "name":'小寶'
+            },
+            "二寶": {
+                "height": 162,
+                "age": 21,
+                "weight": 65,
+                "name":'中寶'
+            }
+        };
+        firebase.database().ref('people').set(people);
+        var peopleRef = firebase.database().ref('people');
+        // 路徑>>排序('屬性')>>讀取> forEach 依序撈出資料
+        peopleRef.orderByChild('age').once('value', (rawData) => {
+            rawData.forEach( (item) => {
+                console.log(item.val());
+            })
+            // console.log(rawData.val());
+        })
+    </script>
+</body>
+
+</html>

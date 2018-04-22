@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" sizes="192x192" href="//www.gstatic.com/mobilesdk/160503_mobilesdk/logo/2x/firebase_96dp.png">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2> once資料寫入1 </h2>
+    <h1 id="title"> 待資料寫入 </h1>
+    <br>
+
+    <h2> on資料寫入2 </h2>
+    <h1 id="title2"> 待資料寫入 </h1>
+    <br>
+    <br>
+    <pre id="data" style="font-size: 20px; color:rgb(34, 163, 2)"></pre>
+
+<script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+<script>
+// 初始化 Firebase
+var config = {
+    apiKey: "AIzaSyDhPKG92miCXI49HvKGLADsRUTuUGR6D74",
+    authDomain: "project-9eef1.firebaseapp.com",
+    databaseURL: "https://project-9eef1.firebaseio.com",
+    projectId: "project-9eef1",
+    storageBucket: "project-9eef1.appspot.com",
+    messagingSenderId: "927933359775"
+  };
+firebase.initializeApp(config);
+console.log('firebase: ', firebase);
+
+// 取得 Database 功能物件
+let dataBase = firebase.database();
+// console.log('dataBaseType: ', typeof dataBase);
+// console.log(`database: `, dataBase);
+
+
+// __路徑相關 API__(每個 JSON tree 的 key 為一個節點)
+
+// ref(path) 尋找資路徑節點(預設為根目錄)
+// child(key) 搜尋子節點
+
+
+// __資料儲存 API__(使用物件格式)
+
+// 1. set(obj) 複寫資料(危險)
+// 2. update(obj) 新增資料
+// 3. push(obj) 新增資料(帶有獨特 key)
+
+// 資料庫情境設計 => 一個教室內有兩位學生
+var classroom = {
+    student1: {
+        'name': '漂亮阿姨',
+        'id': 1
+    },
+    student2: {
+        'name': '普通阿婆',
+        'id': 2
+    },
+}
+
+// dataBase.ref('/arr').set([1, 2, 3, 4, 5, 6, 7, 8]);
+// dataBase.ref().set({});
+dataBase.ref('/classroom').update(classroom);
+// dataBase.ref('/classroom/student1').update({age:33});
+
+// 複寫根目錄資料(set)
+// dataBase.ref().set(classroom);
+// 複寫特定資料(set)
+// dataBase.ref('student1/name').set('亂入小妹');
+
+// let todos = dataBase.ref('/todos'); 
+// todos.push({content:'今天記得刷牙'});
+// todos.push({content:'今天記得洗澡'});
+// todos.set({content:'今天記得刷牙'});
+
+// todos.once('value', (rawData)=>{
+//     console.log('todos: ', rawData.val());
+// })
+
+
+// __讀取資料 API__
+// 1. once() - 讀取資料 => 只執行一次 callback
+// 2. on() - 讀取資料 => 執行 callback 並持續監聽
+
+// let student1Ref = dataBase.ref('student1/name');
+// let student2Ref = dataBase.ref('student2/name');
+
+// 搭配 child 移動路徑
+// let student1Child = dataBase.ref('student1').child('name');
+
+// 1. once() - 讀取資料 => 只執行一次 callback
+// student1Ref.once('value', (rawData) => {
+//     // 資料須先經過 val() 處理成 js 可使用形式
+//     myLog(`student1`, rawData.val());
+//     document.getElementById('title').textContent = rawData.val();
+// });
+
+// student1Child.once('value', (rawData) => {
+//     myLog(`student1Child`, rawData.val());
+// });
+
+// 2. on() - 讀取資料 => 執行 callback 並持續監聽 
+// student2Ref.on('value', (rawData) => {
+//     myLog(`student2`, rawData.val());
+//     document.getElementById('title2').textContent = rawData.val();
+// });
+
+// once 與 on 差別
+// dataBase.ref('student1/name').set('亂入小弟');
+// dataBase.ref('student2/name').set('亂入大叔');
+
+
+// 取得整個班級物件 
+// let classroomRef = dataBase.ref();
+// classroomRef.once('value', (rawData)=>{
+//     console.log('classroom: ', rawData.val());                
+// })
+
+// 刪除資料
+// todos.remove()
+// todos.child('-LA7UOaSnt_MfI6RMUdY').remove()
+
+
+
+// 即時顯示資料在網頁上
+// let el = document.getElementById('data'); 
+// let ref = dataBase.ref();
+// ref.on('value', (rawData)=> {
+//     el.textContent = JSON.stringify(rawData.val(),null,3) 
+// }) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// my function
+function myLog(dataName, data) {
+    let style = 'font-size:12px; background:orange; color:black; border-radius:5px; padding:2px';
+    console.log(`${dataName}: %c${data}`, style);
+}
+</script>
+</body>
+
+</html>
