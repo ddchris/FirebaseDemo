@@ -12,6 +12,9 @@ let app = new Vue({
         }
     },
     beforeCreate() {
+    }
+    ,
+    created() {
         var config = {
             apiKey: "AIzaSyDmoUs0roD2cIah_apNxWPzO4gC6CJ_LhY",
             authDomain: "chatroom-demo01.firebaseapp.com",
@@ -24,10 +27,6 @@ let app = new Vue({
         // 取得資料庫跟根目錄
         dataBase = firebase.database().ref();
         console.log('dataBase: ', dataBase);
-
-    }
-    ,
-    created() {
 
     },
     mounted() {
