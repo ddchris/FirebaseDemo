@@ -44,14 +44,14 @@ let app = new Vue({
                     this.dialogue += `<li class="${this.myStyle}">
                                         <span>
                                             ${nickname}| ${content}   
-                                            <img src="/rabbit.jpg" alt=""/>  
+                                            <img src="../rabbit.jpg" alt=""/>  
                                         </span>
                                       </li> `;
                 }
                 else {
                     this.dialogue += `<li class="${this.otherStyle}"> 
                                         <span>
-                                            <img src="/bear.jpg" alt=""/>    
+                                            <img src="../bear.jpg" alt=""/>    
                                             ${content}| ${nickname}                                    
                                         </span> 
                                       </li> `;
